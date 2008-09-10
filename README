@@ -1,0 +1,92 @@
+NAME
+  terminator
+
+SYNOPSIS
+  an external timeout mechanism based on processes and signals.  safe on
+  windows.  safe for system calls.  safe for minors.
+
+INSTALL
+  gem install terminator
+
+URIS
+  http://codeforpeople.com/lib/ruby
+  http://rubyforge.org/projects/codeforpeople
+
+HISTORY
+  0.4.2
+    initial version with
+
+AUTHORS
+  ara.t.howard - ara.t.howard@gmail.com
+  mikel lindsaar - raasdnil@gmail.com
+
+SAMPLES
+
+  <========< samples/a.rb >========>
+
+  ~ > cat samples/a.rb
+
+    require 'terminator'
+    
+    Terminator.terminate 2 do
+      sleep 4
+    end
+
+  ~ > ruby samples/a.rb
+
+    samples/a.rb:3: 2s (Terminator::Error)
+    	from samples/a.rb:3
+
+
+  <========< samples/b.rb >========>
+
+  ~ > cat samples/b.rb
+
+    require 'terminator'
+    
+    Terminator.terminate 0.2 do
+      sleep 0.4 rescue puts 'timed out!'
+    end
+
+  ~ > ruby samples/b.rb
+
+    timed out!
+
+
+  <========< samples/c.rb >========>
+
+  ~ > cat samples/c.rb
+
+    require 'terminator'
+    
+    begin
+      Terminator.terminate :seconds => 0.2 do
+        sleep 0.4
+      end
+    rescue Terminator.error
+      puts 'timed out!'
+    end
+
+  ~ > ruby samples/c.rb
+
+    timed out!
+
+
+  <========< samples/d.rb >========>
+
+  ~ > cat samples/d.rb
+
+    require 'terminator'
+    
+    trap = lambda{ puts "signaled @ #{ Time.now.to_i }" }
+    
+    Terminator.terminate :seconds => 1, :trap => trap do
+      sleep 2
+      puts "woke up  @ #{ Time.now.to_i }"
+    end
+
+  ~ > ruby samples/d.rb
+
+    signaled @ 1221026177
+    woke up  @ 1221026178
+
