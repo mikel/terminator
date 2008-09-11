@@ -4,7 +4,7 @@ require 'tempfile'
 require 'fattr'
 
 module Terminator
-  Version = '0.4.2'
+  Version = '0.4.3'
 
   def terminate options = {}, &block
     options = { :seconds => Float(options).to_f } unless Hash === options 
