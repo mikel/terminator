@@ -7,10 +7,13 @@ module Terminator
   Version = '0.4.2'
 
   def terminate options = {}, &block
-    options = { :seconds => Float(options).to_i } unless Hash === options 
+    options = { :seconds => Float(options).to_f } unless Hash === options 
 
     seconds = getopt :seconds, options
-    trap = getopt :trap, options, lambda{ eval("raise(::Terminator::Error, '#{ seconds }s')", block) }
+
+    raise ::Terminator::Error, "Time to kill must be greater than 0" unless seconds > 0
+
+    trap = getopt :trap, options, lambda{ eval("raise(::Terminator::Error, 'Timeout out after #{ seconds }s')", block) }
 
     handler = Signal.trap(signal, &trap)
 
