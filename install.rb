@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+#:stopdoc:
 require 'rbconfig'
 require 'find'
 require 'ftools'

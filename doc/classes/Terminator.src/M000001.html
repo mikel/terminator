@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>terminate (Terminator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/terminator.rb, line 120</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">terminate</span> <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">options</span> = { <span class="ruby-identifier">:seconds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">to_i</span> } <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">options</span> 
+
+    <span class="ruby-identifier">seconds</span> = <span class="ruby-identifier">getopt</span> <span class="ruby-identifier">:seconds</span>, <span class="ruby-identifier">options</span>
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-operator">::</span><span class="ruby-constant">Terminator</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>, <span class="ruby-value str">&quot;Time to kill must be at least 1 second&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">seconds</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span>
+
+    <span class="ruby-identifier">trap</span> = <span class="ruby-identifier">getopt</span> <span class="ruby-identifier">:trap</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">lambda</span>{ <span class="ruby-identifier">eval</span>(<span class="ruby-node">&quot;raise(::Terminator::Error, 'Timeout out after #{ seconds }s')&quot;</span>, <span class="ruby-identifier">block</span>) }
+
+    <span class="ruby-identifier">handler</span> = <span class="ruby-constant">Signal</span>.<span class="ruby-identifier">trap</span>(<span class="ruby-identifier">signal</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">trap</span>)
+
+    <span class="ruby-identifier">terminator_pid</span> = <span class="ruby-identifier">plot_to_kill</span> <span class="ruby-identifier">pid</span>, <span class="ruby-identifier">:in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">seconds</span>, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">signal</span>
+
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>
+      <span class="ruby-identifier">nuke_terminator</span>(<span class="ruby-identifier">terminator_pid</span>)
+    <span class="ruby-keyword kw">ensure</span>
+      <span class="ruby-constant">Signal</span>.<span class="ruby-identifier">trap</span>(<span class="ruby-identifier">signal</span>, <span class="ruby-identifier">handler</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

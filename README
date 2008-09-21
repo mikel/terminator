@@ -2,9 +2,9 @@ NAME
   Terminator
 
 SYNOPSIS
-  An external timeout mechanism based on processes and signals.  Safe on
-  windows.  Safe for system calls.  Safe for minors.  but not very safe
-  for misbehaving, downtrodden zombied out processes.
+  An external timeout mechanism based on processes and signals.  Safe for 
+  system calls.  Safe for minors.  but not very safe for misbehaving, 
+  downtrodden zombied out processes.
   
 DESCRIPTION
   Terminator is a solution to the problem of 'how am I meant to kill a
@@ -45,10 +45,13 @@ HOW IT WORKS
   
   Word of warning though.  Terminator is not subtle.  Don't expect it to split
   hairs.  Trying to give a process that takes about 1 second to complete, a
-  2 second terminator... well... odds are 50/50 on who is going to make it...
+  2 second terminator... well... odds are 50/50 on who is going to make it.
   
   If you have a 1 second process, give it 3 seconds to complete.  Arnie doesn't
-  much care for casualties of war...
+  much care for casualties of war.
+  
+  Another word of warning, if using Terminator inside a loop, it is possible
+  to exceed your open file limit.  I have safely tested looping 1000 times
   
 INSTALL
   gem install terminator

@@ -1,4 +1,5 @@
 #! /usr/bin/env gem build
+#:stopdoc:
 
 lib, version = File::basename(File::dirname(File::expand_path(__FILE__))).split %r/-/, 2
 
@@ -24,7 +25,7 @@ Gem::Specification::new do |spec|
   
   spec.require_path = "lib" 
 
-  spec.has_rdoc = File::exist? "doc" 
+  spec.has_rdoc = File::exist? "doc"
   spec.test_suite_file = "test/#{ lib }.rb" if File::directory? "test"
   #spec.add_dependency 'lib', '>= version'
   spec.add_dependency 'fattr'
