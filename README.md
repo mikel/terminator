@@ -73,8 +73,9 @@ gem install terminator
     * added more test cases (mikel)
 
 ## Authors
-  ara.t.howard - ara.t.howard@gmail.com
-  mikel lindsaar - raasdnil@gmail.com
+
+* [ara.t.howard](http://github.com/ahoward)
+* [mikel lindsaar](http://github.com/mikel)
 
 ## Sampes
 
