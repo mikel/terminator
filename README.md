@@ -74,8 +74,7 @@ gem install terminator
 
 ## Authors
 
-* [ara.t.howard](http://github.com/ahoward)
-* [mikel lindsaar](http://github.com/mikel)
+[Ara T Howard](http://github.com/ahoward) and [Mikel Lindsaar](http://github.com/mikel)
 
 ## Sampes
 
